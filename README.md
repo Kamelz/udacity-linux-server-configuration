@@ -27,4 +27,29 @@ tcp        0      0 :::2200                     :::*                        LIST
  6 - rm -f /etc/localtime
 ln -s /usr/share/zoneinfo/UTC /etc/localtime
 
-todo  Install and configure Apache to serve a Python mod_wsgi application.
+ sudo yum install httpd mod_ssl
+ sudo yum install mod_wsgi
+ sudo /usr/sbin/apachectl start	
+  sudo nano /etc/httpd/conf/httpd.conf
+  add hostname
+  ServerName http://18.217.3.165:80
+  sudo /usr/sbin/apachectl restart
+  
+sudo yum install postgresql-server postgresql-contrib
+service postgresql initdb
+service postgresql start
+change local in sudo nano /var/lib/pgsql9/data/pg_hba.conf to 
+local   all             all                                     md5
+
+
+sudo -u postgres -i
+psql postgres
+
+CREATE USER catalog WITH PASSWORD 'jw8s0F4';
+
+grant all privileges on database postgres to catalog; 
+
+
+sudo yum install git
+
+ref http://flask.pocoo.org/docs/0.12/deploying/mod_wsgi/
