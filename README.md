@@ -27,12 +27,18 @@ sudo ufw enable
 - add new user grader
 - `sudo adduser grader`
 - `sudo nano /etc/sudoers.d/grader` and paste  `grader ALL=(ALL) NOPASSWD:ALL`
-
- #### ssh login
- -  move downloaded key to ~/.ssh/
- - `chmod 600 ~/.ssh/id_rsa`
- - `ssh -i ~/.ssh/id_rsa grader@18.216.248.66 -p 2200
+#### generate rsa keys
+ - on local machine run `ssh_keygen -t RSA`
+ - on server `mkdir /home/grader/.ssh/authorized_keys`
+ - copy the content of the .pub file and paste it in `authorized_keys` file
  
+#### ssh login
+ - move downloaded key to ~/.ssh/
+ - `chmod 600 ~/.ssh/id_rsa`
+ - `ssh -i ~/.ssh/id_rsa grader@18.216.248.66 -p 2200`
+ - `/etc/ssh/sshd_config` change `PasswordAuthentication` to no.
+ - `sudo service ssh restart`
+
 ## Application Functionality
 #### Install apache2 
  - `sudo apt-get install apache2`
@@ -87,3 +93,6 @@ sudo ufw enable
     CustomLog /var/log/web/access.log combined
 </VirtualHost>
 ```
+## Ref
+- [flask app configuaration](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
+- [timezone](https://askubuntu.com/questions/138423/how-do-i-change-my-timezone-to-utc-gmt/138442)
